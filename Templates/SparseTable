@@ -1,0 +1,31 @@
+using ll=long long ;
+struct SparseTable{
+    vector<vector<ll>> st;
+    vector<ll> arr;
+    ll n;
+    ll N;
+    
+    void build(){
+        for(ll j=1;j<=N;j++){
+            for(ll i=0;i<=(n-pow(2,j)-1);i++){
+                st[i][j]=__gcd(st[i][j-1],st[i+pow(2,j-1)][j-1]);
+            }
+        }
+    }
+    
+    SparseTable(ll n,vector<ll> sam){
+        this->n=n;
+        N=ceil(log2(n));
+        arr=sam;
+        st.resize(n,vector<ll>(N+1,0));
+        for(ll i=0;i<n;i++) st[i][0]=sam[i];
+        build();
+    }
+    
+    ll query(ll l,ll r){
+        ll len=r-l+1;
+        ll pw=31-(__builtin_clz(len));
+        return __gcd(st[l][pw],st[r-pow(2,pw)+1][pw]);
+    }
+    
+};
