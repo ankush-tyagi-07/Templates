@@ -7,7 +7,7 @@ struct SparseTable{
     
     void build(){
         for(ll j=1;j<=N;j++){
-            for(ll i=0;i<=(n-pow(2,j)-1);i++){
+            for(ll i=0;i<=(n-pow(2,j));i++){
                 st[i][j]=__gcd(st[i][j-1],st[i+pow(2,j-1)][j-1]);
             }
         }
