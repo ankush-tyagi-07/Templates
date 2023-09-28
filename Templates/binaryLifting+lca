@@ -16,6 +16,28 @@ void dfs(ll cv,ll par,vi adj[],vvl& parents){
     }
 }
 
+int lca(int x,int y,vl& depth,vvl& parents){
+    ll dx=depth[x],dy=depth[y];
+        if(dx>dy){
+            x=kthParent(x,dx-dy,parents);
+        }
+        else if(dy>dx) y=kthParent(y,dy-dx,parents);
+        if(x==y){
+            return x;
+        }
+        else{
+            ll maxlog=parents[0].size();
+            for(int i=maxlog-1;i>=0;i--){
+                int pox=parents[x][i];
+                int poy=parents[y][i];
+                if(pox!=poy){
+                    x=pox;y=poy;
+                }
+            }
+            return parents[x][0];
+            }
+}
+
 void solve(){
 // vi adj[n+1];
 // store tree in adj
