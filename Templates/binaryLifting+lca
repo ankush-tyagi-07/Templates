@@ -11,6 +11,7 @@ ll kthParent(ll x,ll k,vvl& parents){
 void dfs(ll cv,ll par,vi adj[],vvl& parents){
     parents[cv][0]=par;
     for(auto it:adj[cv]){
+    if(it==par) continue;
         dfs(it,cv,adj,parents);
     }
 }
