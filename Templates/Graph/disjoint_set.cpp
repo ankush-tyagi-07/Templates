@@ -1,40 +1,32 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-
-class disjointset{
-    private:
-    vector<int> size,parent;
-    public:
-    disjointset(int n){
-        size.resize(n+1,1);
-        parent.resize(n+1);
-        for(int i=0;i<n+1;i++){
-            parent[i]=i;
-        }
-    }
-    
-    int find_parent(int x){
-        if(parent[x]==x){
-            return x;
-        }
-        return parent[x]=find_parent(parent[x]);
-    }
-    
-    void union_size(int x,int y){
-        int ulx=find_parent(x);
-        int uly=find_parent(y);
-        if(ulx!=uly){
-            if(size[ulx]>=size[uly]){
-                parent[uly]=ulx;
-                size[ulx]+=size[uly];
-            }
-            else{
-                parent[ulx]=uly;
-                size[uly]+=size[ulx];
-            }
-        }
-    }
+class disjointSet{
+  vector<int> rank,parent;
+  public:
+  disjointSet(int n){
+      rank.assign(n,0);
+      parent.assign(n,-1);
+      for(int i=0;i<n;i++){
+          parent[i]=i;
+      }
+  }
+  
+  int ulp(int x){
+      if(parent[x]==x) return x;
+      else return parent[x]=ulp(parent[x]);
+  }
+  
+  void unionbyrank(int u,int v){
+      u=ulp(u);
+      v=ulp(v);
+      if(u==v) return;
+      if(rank[u]==rank[v]) rank[u]++;
+      if(rank[u]>=rank[v]){
+          parent[v]=u;
+      }
+      else parent[u]=v;
+  }
 };
 
 int main(){
